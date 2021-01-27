@@ -110,6 +110,8 @@ func (w *TarWriter) writeImage(td imagedesc.ImageDescriptor) error {
 	for _, imgLayer := range td.Layers {
 		if w.imageLayerWriterCheck.ShouldLayerBeIncluded(imgLayer) {
 			w.layersToWrite = append(w.layersToWrite, imgLayer)
+		} else {
+			w.logger.WriteStr("Skipped layer [%s]: Layer was non-distributable", imgLayer.Digest)
 		}
 	}
 	return nil
